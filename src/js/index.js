@@ -255,5 +255,5 @@ function init() {
   container.innerHTML = '';
   container.appendChild(checkbox);
   list.forEach((item) => container.appendChild(item.cloneNode(true)));
-  container.childNodes[0].style.marginTop = 0;
+  container.childNodes[1].style.marginTop = 0;
 }
