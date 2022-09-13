@@ -95,6 +95,11 @@ style.innerHTML = `
     font-family: inherit;
     font-size: inherit;
     color: #4f46e5;
+    text-decoration: none;
+  }
+
+  .read-container a:hover {
+    text-decoration: underline;
   }
 
   .read-container ul {
@@ -119,7 +124,7 @@ style.innerHTML = `
     padding: 20px;
     border: none;
     border-radius: 4px;
-    background-color: #F5F5F5;
+    background-color: #EEEEEE;
     box-sizing: border-box;
   }
 
@@ -127,6 +132,21 @@ style.innerHTML = `
   .read-container pre * {
     font-size: 16px !important;
     line-height: 23px;
+    font-family: 'JetBrains Mono', monospace !important;
+  }
+
+  .read-container code {
+    border: none;
+    border-radius: 4px;
+    background-color: #EEEEEE;
+    box-sizing: border-box;
+    display: inline-block;
+    padding: 0 8px;
+    line-height: 28px;
+  }
+
+  .read-container code,
+  .read-container code * {
     font-family: 'JetBrains Mono', monospace !important;
   }
 
@@ -170,7 +190,7 @@ style.innerHTML = `
 `;
 document.body.appendChild(style);
 
-const tags = ['h1', 'h2', 'h3', 'p:not(p *)', 'ul:not(p *)', 'pre:not(p *)', 'img:not(p *):not(ul *)'];
+const tags = ['h1', 'h2', 'h3', 'p:not(p *, ul *)', 'ul:not(p *)', 'pre:not(p *)', 'img:not(p *, ul *)'];
 let list = [];
 
 tags.forEach((tag) => list.push(...document.querySelectorAll(tag)));
