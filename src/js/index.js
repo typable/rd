@@ -1,10 +1,15 @@
+let showImages = false;
+
 const style = document.createElement('style');
 style.innerHTML = `
   @import url('https://fonts.googleapis.com/css2?family=Source+Serif+Pro:ital,wght@0,400;0,600;1,400;1,600&display=swap');
   @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;1,400;1,500&display=swap');
 
   body.reader-mode {
-    overflow: hidden;
+    background: none;
+    background-color: #CCCCCC;
+    padding: 100px 0;
+    height: unset;
   }
 
   body.reader-mode > *:not(.read-container, .read-button) {
@@ -15,23 +20,29 @@ style.innerHTML = `
     display: block;
   }
 
-  body.reader-mode .read-button {
-    right: 32px;
+  body.reader-mode.hide-image .read-container img {
+    display: none !important;
+  }
+
+  .read-checkbox {
+    position: fixed;
+    top: 25px;
+    right: 25px;
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
   }
 
   .read-container {
+    margin: 0 auto;
     display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
     width: 100%;
-    height: 100vh;
-    max-height: 100vh;
+    max-width: 940px;
+    min-height: 100vh;
     background-color: white;
     z-index: 99999;
     overflow-y: auto;
-    padding: 200px 50px;
+    padding: 110px 70px;
     box-sizing: border-box;
   }
 
@@ -42,8 +53,9 @@ style.innerHTML = `
     color: inherit !important;
   }
 
-  .read-container * {
+  .read-container *:not(.read-checkbox) {
     font-family: 'Source Serif Pro', serif;
+    position: unset !important;
   }
 
   .read-container > * {
@@ -63,11 +75,13 @@ style.innerHTML = `
   }
 
   .read-container h1 {
-    font-size: 38px !important;
-    line-height: 48px;
+    font-size: 42px !important;
+    line-height: 52px;
     color: #424242;
     margin-top: 100px;
     margin-bottom: 50px;
+    padding-bottom: 30px;
+    border-bottom: 1px solid #BBBBBB;
   }
 
   .read-container h2 {
@@ -162,7 +176,7 @@ style.innerHTML = `
     display: block;
     margin-bottom: 34px;
   }
-  
+
   .read-button {
     position: fixed;
     right: 15px;
@@ -183,42 +197,63 @@ style.innerHTML = `
   .read-button:hover {
     background-color: #424242;
   }
-
-  // .read-container img {
-  //   display: none !important;
-  // }
 `;
 document.body.appendChild(style);
 
-const tags = ['h1', 'h2', 'h3', 'p:not(p *, ul *)', 'ul:not(p *)', 'pre:not(p *)', 'img:not(p *, ul *)'];
-let list = [];
-
-tags.forEach((tag) => list.push(...document.querySelectorAll(tag)));
-
-list = list.sort((a, b) => {
-  if( a === b) return 0;
-    if( !a.compareDocumentPosition) {
-      // support for IE8 and below
-      return a.sourceIndex - b.sourceIndex;
-    }
-    if( a.compareDocumentPosition(b) & 2) {
-      // b comes before a
-      return 1;
-    }
-  return -1;
-});
-
 const container = document.createElement('div');
 container.classList.add('read-container');
-list.forEach((item) => container.appendChild(item.cloneNode(true)));
-container.childNodes[0].style.marginTop = 0;
 document.body.appendChild(container);
 
+const checkbox = document.createElement('input');
+checkbox.type = 'checkbox';
+checkbox.classList.add('read-checkbox');
+checkbox.title = 'Show images';
+checkbox.addEventListener('click', () => {
+  showImages = checkbox.checked;
+  init();
+});
+
 const button = document.createElement('button');
-button.textContent = 'r';
 button.classList.add('read-button');
 button.addEventListener('click', () => {
+  if(document.body.classList.contains('reader-mode')) {
+    document.body.classList.toggle('reader-mode');
+    return;
+  }
+  init();
   document.body.classList.toggle('reader-mode');
-  container.scrollTop = 0;
+  window.scrollTo(0, 0);
 });
+button.textContent = 'r';
 document.body.appendChild(button);
+
+function init() {
+  document.body.classList[showImages ? 'remove' : 'add']('hide-image');
+
+  const tags = ['h1', 'h2', 'h3', 'p:not(p *, ul *)', 'ul:not(p *)', 'pre:not(p *)'];
+  let list = [];
+
+  if(showImages) {
+    tags.push('img:not(p *, ul *)');
+  }
+
+  tags.forEach((tag) => list.push(...document.querySelectorAll(`${tag}:not(.read-container *)`)));
+
+  list = list.sort((a, b) => {
+    if( a === b) return 0;
+      if( !a.compareDocumentPosition) {
+        // support for IE8 and below
+        return a.sourceIndex - b.sourceIndex;
+      }
+      if( a.compareDocumentPosition(b) & 2) {
+        // b comes before a
+        return 1;
+      }
+    return -1;
+  });
+
+  container.innerHTML = '';
+  container.appendChild(checkbox);
+  list.forEach((item) => container.appendChild(item.cloneNode(true)));
+  container.childNodes[0].style.marginTop = 0;
+}
