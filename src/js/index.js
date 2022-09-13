@@ -10,6 +10,7 @@ style.innerHTML = `
     background-color: #EEEEEE;
     padding: 100px 0;
     height: unset;
+    margin: 0 !important;
   }
 
   body.reader-mode > *:not(.read-container, .read-button) {
@@ -28,9 +29,9 @@ style.innerHTML = `
     position: fixed;
     top: 25px;
     right: 25px;
-    width: 18px;
-    height: 18px;
-    cursor: pointer;
+    width: 18px !important;
+    height: 18px !important;
+    cursor: pointer !important;
   }
 
   .read-container {
@@ -106,11 +107,15 @@ style.innerHTML = `
     content: none !important;
   }
 
-  .read-container a {
+  .read-container a,
+  .read-container a * {
+    padding: 0;
+    margin: 0;
     font-family: inherit;
     font-size: inherit;
     color: #4f46e5;
     text-decoration: none;
+    border: none;
   }
 
   .read-container a:hover {
@@ -128,10 +133,11 @@ style.innerHTML = `
   }
 
   .read-container ul li {
-    font-size: 20px;
-    line-height: 32px;
+    font-size: 20px !important;
+    line-height: 34px;
     color: #424242;
     padding: 0;
+    margin: 0;
   }
 
   .read-container pre {
@@ -148,9 +154,15 @@ style.innerHTML = `
     font-size: 16px !important;
     line-height: 23px;
     font-family: 'JetBrains Mono', monospace !important;
+    color: #424242 !important;
+    tab-size: 1 !important;
   }
 
-  .read-container code {
+  .read-container pre span {
+    display: inline-block;
+  }
+
+  .read-container p code {
     border: none;
     border-radius: 4px;
     background-color: #EEEEEE;
@@ -191,7 +203,7 @@ style.innerHTML = `
     border-radius: 4px;
     cursor: pointer;
     font-size: 26px;
-    outline: none;
+    outline: none !important;
     font-family: 'Source Serif Pro', serif;
   }
 
