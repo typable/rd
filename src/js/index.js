@@ -222,16 +222,16 @@ button.addEventListener('click', () => {
     return;
   }
   init();
-  document.body.classList.toggle('reader-mode');
   window.scrollTo(0, 0);
 });
 button.textContent = 'r';
 document.body.appendChild(button);
 
 function init() {
+  document.body.classList.remove('reader-mode');
   document.body.classList[showImages ? 'remove' : 'add']('hide-image');
 
-  const tags = ['h1', 'h2', 'h3', 'p:not(p *, ul *)', 'ul:not(p *)', 'pre:not(p *)'];
+  const tags = ['h1', 'h2', 'h3', 'p:not(p *, ul *)', 'ul:not(p *, ul *)', 'pre:not(p *)'];
   let list = [];
 
   if(showImages) {
@@ -240,6 +240,7 @@ function init() {
 
   tags.forEach((tag) => list.push(...document.querySelectorAll(`${tag}:not(.read-container *)`)));
 
+  list = list.filter((item) => item.offsetParent !== null);
   list = list.sort((a, b) => {
     if( a === b) return 0;
       if( !a.compareDocumentPosition) {
@@ -257,4 +258,5 @@ function init() {
   container.appendChild(checkbox);
   list.forEach((item) => container.appendChild(item.cloneNode(true)));
   container.childNodes[1].style.marginTop = 0;
+  document.body.classList.add('reader-mode');
 }
