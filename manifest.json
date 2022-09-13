@@ -7,6 +7,13 @@
     "js": ["./src/js/content-script.js"],
     "matches": ["<all_urls>"]
   }],
+  "background": {
+    "service_worker": "./src/js/background.js",
+    "persists": true
+  },
+  "action": {
+    "default_title": "Toggle reader mode"
+  },
   "web_accessible_resources": [{
       "resources": ["*.js", "*.json"],
       "matches": ["<all_urls>"]
