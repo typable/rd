@@ -7,7 +7,7 @@ style.innerHTML = `
 
   body.reader-mode {
     background: none;
-    background-color: #CCCCCC;
+    background-color: #EEEEEE;
     padding: 100px 0;
     height: unset;
   }
@@ -40,6 +40,7 @@ style.innerHTML = `
     max-width: 940px;
     min-height: 100vh;
     background-color: white;
+    border: 1px solid #DDDDDD;
     z-index: 99999;
     overflow-y: auto;
     padding: 110px 70px;
