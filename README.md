@@ -1,2 +1,2 @@
-# reader
-A lightweight reader mode extension
+# rd
+A lightweight reading mode extension
