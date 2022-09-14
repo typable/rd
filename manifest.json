@@ -3,19 +3,22 @@
   "description": "A lightweight reader mode extension",
   "version": "1.0",
   "manifest_version": 3,
-  "content_scripts": [{
-    "js": ["./src/js/content-script.js"],
-    "matches": ["<all_urls>"]
-  }],
+  "content_scripts": [
+    {
+      "js": ["./src/content.js"],
+      "matches": ["<all_urls>"]
+    },
+    {
+      "css": ["./src/style.css"],
+      "matches": ["<all_urls>"]
+    }
+  ],
   "background": {
-    "service_worker": "./src/js/background.js",
+    "service_worker": "./src/background.js",
     "persists": true
   },
   "action": {
     "default_title": "Toggle reader mode"
   },
-  "web_accessible_resources": [{
-      "resources": ["*.js", "*.json"],
-      "matches": ["<all_urls>"]
-  }]
+  "permissions": ["activeTab"]
 }
