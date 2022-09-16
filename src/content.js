@@ -42,10 +42,15 @@ const init = async () => {
   const port = chrome.runtime.connect();
 
   const useStore = (name, initial) => {
-    const [value, setValue] = useState(JSON.parse(localStorage.getItem(name)) ?? initial);
+    const [value, setValue] = useState(initial);
+    useEffect(() => {
+      chrome.storage.local.get([name], (values) => {
+        setValue(values[name]);
+      });
+    }, []);
     const setStore = (value) => {
       setValue(value);
-      localStorage.setItem(name, JSON.stringify(value));
+      chrome.storage.local.set({ [name]: value }, console.log);
     }
     return [value, setStore];
   }
@@ -53,9 +58,9 @@ const init = async () => {
   const App = () => {
     const [visible, setVisible] = useState(false);
     const [font, setFont] = useStore('rd.font', FONTS[0]);
-    const [showImages, setShowImages] = useState(false);
-    const [darkMode, setDarkMode] = useState(false);
-    const [noColor, setNoColor] = useState(false);
+    const [darkMode, setDarkMode] = useStore('rd.dark-mode', false);
+    const [showImages, setShowImages] = useStore('rd.show-images', false);
+    const [noColor, setNoColor] = useStore('rd.no-color', false);
     
     useEffect(() => {
       const handler = (message) => {

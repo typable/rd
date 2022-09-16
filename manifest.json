@@ -20,5 +20,5 @@
     "resources": ["*.js"],
     "matches": ["<all_urls>"]
   }],
-  "permissions": ["activeTab"]
+  "permissions": ["activeTab", "storage"]
 }
