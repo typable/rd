@@ -228,17 +228,20 @@ const init = async () => {
         }
       
         .rd-app .content h1 {
+          margin: 0px;
           padding-bottom: 20px;
           border-bottom: 1px solid #CCC;
         }
       
         .rd-app .content h2 {
+          margin: 0px;
           padding-top: 32px;
           padding-bottom: 16px;
           border-bottom: 1px solid #CCC;
         }
       
         .rd-app .content h3 {
+          margin: 0px;
           padding-top: 24px;
         }
       
@@ -269,7 +272,9 @@ const init = async () => {
         }
       
         .rd-app .content pre,
-        .rd-app .content pre * {
+        .rd-app .content pre *,
+        .rd-app .content code,
+        .rd-app .content code * {
           font-size: 16px;
           line-height: 24px;
           font-family: JetBrains Mono;
