@@ -1,7 +1,13 @@
+const ports = {};
+
 chrome.action.onClicked.addListener(() => {
   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-    chrome.tabs.sendMessage(tabs[0].id, { text: 'toggle-mode' }, (message) => {
-      // response callback
-    });
+    ports[tabs[0].id].postMessage({ action: 'clicked' });
+  });
+});
+
+chrome.runtime.onConnect.addListener((port) => {
+  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+    ports[tabs[0].id] = port;
   });
 });
