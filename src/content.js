@@ -71,6 +71,9 @@ const init = async () => {
         }
       }
       document.body.classList[visible ? 'add' : 'remove']('rd-mode');
+      if(!visible) {
+        setShowSettings(false);
+      }
       port.onMessage.addListener(handler);
       return () => port.onMessage.removeListener(handler);
     }, [visible]);
