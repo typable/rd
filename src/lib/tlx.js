@@ -21,7 +21,10 @@ export const createTlx = (createElement) => {
     if(node.nodeType === Node.TEXT_NODE) {
       return apply(node.textContent, refs);
     }
-    const tag = node.tagName.toLowerCase();
+    if(node.nodeType === Node.COMMENT_NODE) {
+      return [];
+    }
+    const tag = node.tagName;
     const attributes = {};
     for(const attribute of node.attributes) {
       const key = attribute.name;
