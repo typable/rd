@@ -7,10 +7,6 @@
     {
       "js": ["./src/content.js"],
       "matches": ["<all_urls>"]
-    },
-    {
-      "css": ["./src/style.css"],
-      "matches": ["<all_urls>"]
     }
   ],
   "background": {
